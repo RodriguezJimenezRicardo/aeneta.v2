@@ -18,12 +18,12 @@ class User extends Authenticatable
 
     public function docentes()
     {
-        return $this->belongsTo(Docente::class, 'id_visitante', 'id_docente');
+        return $this->hasMany(Docente::class, 'id_docente', 'id_docente');
     }
 
     public function estudiantes()
     {
-        return $this->belongsTo(Estudiante::class, 'id_visitante', 'id_estudiante');
+        return $this->hasMany(Estudiante::class, 'id_estudiante', 'id_estudiante');
     }
 
     public function usersTokens()

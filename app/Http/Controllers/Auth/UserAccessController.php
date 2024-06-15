@@ -58,7 +58,8 @@ class UserAccessController extends Controller
 
         $token->save();
         //buscar docente o profesor con id
-        return redirect()->route('prueba');
+
+        return redirect()->route('admin.index');
     }
 
     public function registerForm()
@@ -87,6 +88,7 @@ class UserAccessController extends Controller
         $user->id_user = sha1($request->email);
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->rol = 'Administrador';
 
         $user->save();
 
@@ -101,7 +103,7 @@ class UserAccessController extends Controller
         Auth::login($user);
         session(['user' => $user]);
 
-        return redirect()->route('prueba');
+        return redirect()->route('admin.index');
     }
 
     public function logout(Request $request)

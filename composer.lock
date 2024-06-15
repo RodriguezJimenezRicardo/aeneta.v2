@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d8f02375defad1e77bca804e490049a1",
+    "content-hash": "4c6b001c19f96383f7f08d3492c4db73",
     "packages": [
         {
             "name": "brick/math",
@@ -4423,16 +4423,16 @@
         },
         {
             "name": "symfony/http-client",
-            "version": "v7.1.0",
+            "version": "v7.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/http-client.git",
-                "reference": "2266f9813ed7d8c84e04627edead7b7fd249d6e9"
+                "reference": "1ec24a54d1885b11e862d6ddab31bd6749720d20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/http-client/zipball/2266f9813ed7d8c84e04627edead7b7fd249d6e9",
-                "reference": "2266f9813ed7d8c84e04627edead7b7fd249d6e9",
+                "url": "https://api.github.com/repos/symfony/http-client/zipball/1ec24a54d1885b11e862d6ddab31bd6749720d20",
+                "reference": "1ec24a54d1885b11e862d6ddab31bd6749720d20",
                 "shasum": ""
             },
             "require": {
@@ -4497,7 +4497,7 @@
                 "http"
             ],
             "support": {
-                "source": "https://github.com/symfony/http-client/tree/v7.1.0"
+                "source": "https://github.com/symfony/http-client/tree/v7.1.1"
             },
             "funding": [
                 {
@@ -4513,7 +4513,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-05-13T15:35:37+00:00"
+            "time": "2024-05-31T14:57:53+00:00"
         },
         {
             "name": "symfony/http-client-contracts",
@@ -4866,16 +4866,16 @@
         },
         {
             "name": "symfony/mailgun-mailer",
-            "version": "v7.1.0",
+            "version": "v7.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/mailgun-mailer.git",
-                "reference": "aa5afbe846bbc8bde6afe2602f0427834b872f55"
+                "reference": "08d9b1fe18db2ea3b3a69c8c280b3f85479efdaa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/mailgun-mailer/zipball/aa5afbe846bbc8bde6afe2602f0427834b872f55",
-                "reference": "aa5afbe846bbc8bde6afe2602f0427834b872f55",
+                "url": "https://api.github.com/repos/symfony/mailgun-mailer/zipball/08d9b1fe18db2ea3b3a69c8c280b3f85479efdaa",
+                "reference": "08d9b1fe18db2ea3b3a69c8c280b3f85479efdaa",
                 "shasum": ""
             },
             "require": {
@@ -4915,7 +4915,7 @@
             "description": "Symfony Mailgun Mailer Bridge",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/mailgun-mailer/tree/v7.1.0"
+                "source": "https://github.com/symfony/mailgun-mailer/tree/v7.1.1"
             },
             "funding": [
                 {
@@ -4931,7 +4931,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-04-18T09:32:20+00:00"
+            "time": "2024-05-31T14:57:53+00:00"
         },
         {
             "name": "symfony/mime",

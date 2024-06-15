@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\UserAccessController;
+use App\Http\Controllers\EstudianteController;
+use App\Http\Controllers\PdfDocumentController;
+use App\Http\Controllers\TrabajoAcademicoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,11 +59,21 @@ Route::get('/pdf/{id}/preview', [PdfDocumentController::class, 'showPdfPreview']
 Route::get('/pdf/{id}/show', [PdfDocumentController::class, 'showPdf'])->name('pdf.show'); #muestra todo el pdf
 
 #ruta de vista del administrador
-Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-Route::get('/admin/agregarSinodal', [AdminController::class, 'agregarSinodal'])->name('admin.agregarSinodal');
-Route::post('/admin/addSinodales', [AdminController::class, 'addSinodales'])->name('admin.addSinodales');
+Route::middleware(['auth', 'user.session'])->controller(AdminController::class)->prefix('admin')->group(function () {
+    Route::get('/', 'index')->name('admin.index');
 
-Route::get('/admin/ttDetails/{id}', [AdminController::class, 'ttDetails'])->name('admin.ttDetails');
+    Route::get('/accounts', 'accounts')->name('admin.accounts');
+
+    Route::post('/addUser', 'addUser')->name('admin.addUser');
+
+    Route::delete('/destroyUser', 'destroyUser')->name('admin.destroyUser');
+
+    Route::get('/agregarSinodal', 'agregarSinodal')->name('admin.agregarSinodal');
+
+    Route::post('/addSinodales', 'addSinodales')->name('admin.addSinodales');
+
+    Route::get('/ttDetails/{id}', 'ttDetails')->name('admin.ttDetails');
+});
 
 Route::get('/estudiante', [EstudianteController::class, 'index'])->name('estudiante.index');
 

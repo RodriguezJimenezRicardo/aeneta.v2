@@ -9,7 +9,7 @@ class Area extends Model
 {
     use HasFactory;
 
-    protected $table = 'area';
+    protected $table = 'Area';
 
     protected $primaryKey = 'id_area';
 
@@ -18,4 +18,9 @@ class Area extends Model
     protected $fillable = ['descripcion'];
 
     public $timestamps = false;
+
+    public function departamento()
+    {
+        return $this->hasMany(Departamento::class, 'id_area', 'id_area');
+    }
 }

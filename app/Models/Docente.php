@@ -15,9 +15,9 @@ class Docente extends Model
 
     public $timestamps      = false;
 
-    public function users()
+    public function user()
     {
-        return $this->hasMany(User::class, 'id_visitante', 'id_docente');
+        return $this->belongsTo(User::class, 'id_docente', 'id_docente');
     }
 
     public function trabajoAcademicoDirectores()

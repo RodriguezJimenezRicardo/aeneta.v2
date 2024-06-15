@@ -8,16 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Estudiante extends Model
 {
     protected $table        = 'Estudiante';
-    protected $primaryKey   = 'id_docente';
+    protected $primaryKey   = 'id_estudiante';
     protected $keyType      = 'string';
 
     public $incrementing = false;
 
     public $timestamps      = false;
 
-    public function users()
+    public function user()
     {
-        return $this->hasMany(User::class, 'id_visitante', 'id_estudiante');
+        return $this->belongsTo(User::class, 'id_estudiante', 'id_estudiante');
     }
 
     public function trabajoAcademico()
