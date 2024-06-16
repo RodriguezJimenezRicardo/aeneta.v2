@@ -20,9 +20,10 @@ class ValidateUserSession
         if (is_null($request->route('id_docente')) || is_null($request->route('id_estudiante')) || is_null($request->route('id_user'))) {
             return $next($request);
         } else {
+            dd($user);
             if ($user->id_docente  != $request->route('id_docente') || $user->id_user  != $request->route('id_user')) {
                 return badRequest('No tienes acceso al Docente.');
-            } else if ($user->id_estudiante  != $request->route('id_estudiante') || $user->id_user  != $request->route('id_user')) {
+            } elseif ($user->id_estudiante  != $request->route('id_estudiante') || $user->id_user  != $request->route('id_user')) {
                 return badRequest('No tienes acceso al Docente.');
             }
         }

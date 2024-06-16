@@ -46,9 +46,15 @@ class UserAccessController extends Controller
             return badRequest('Contraseña incorrecta');
         }
 
+
         Auth::login($user);
 
-        session(['user' => $user]);
+        try {
+            session(['user' => $user]);
+            //dd($user);
+        } catch (exception $e) {
+            return badRequest($e->getMessage());
+        }
 
         $token = new UserToken();
 
@@ -59,7 +65,18 @@ class UserAccessController extends Controller
         $token->save();
         //buscar docente o profesor con id
 
-        return redirect()->route('admin.index');
+        switch ($user->rol) {
+            case 'Estudiante':
+                return redirect()->route('estudiante.index', ['id_estudiante' => $user->id_estudiante]);
+                break;
+            case 'Docente':
+                //dd('hola');
+                return redirect()->route('docente.index', ['id_docente' => $user->id_docente]);
+                break;
+            case 'Administrador':
+                return redirect()->route('admin.index');
+                break;
+        }
     }
 
     public function registerForm()

@@ -10,6 +10,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
@@ -22,7 +23,7 @@ class AdminController extends Controller
     public function accounts()
     {
         $users = User::with('docentes', 'estudiantes')->get();
-        dump($users);
+        //dump($users);
         $departments = Departamento::with('areas')->get();
         //dump($departments);
         return view('admin.accounts')->with(['users' => $users, 'departments' => $departments]);
@@ -77,7 +78,7 @@ class AdminController extends Controller
 
                 $user->id_user = sha1($request->email);
                 $user->email = $request->email;
-                $user->password = $request->boleta;
+                $user->password = Hash::make($request->boleta);
                 $user->id_estudiante = $request->boleta;
                 $user->rol = $request->rol;
 
@@ -109,7 +110,7 @@ class AdminController extends Controller
 
                 $user->id_user = sha1($request->email);
                 $user->email = $request->email;
-                $user->password = $request->boleta;
+                $user->password = Hash::make($request->boleta);
                 $user->id_docente = $request->boleta;
                 $user->rol = $request->rol;
 
@@ -124,7 +125,7 @@ class AdminController extends Controller
 
                 $user->id_user = sha1($request->email);
                 $user->email = $request->email;
-                $user->password = $request->boleta;
+                $user->password = Hash::make($request->boleta);
                 $user->rol = $request->rol;
 
                 $user->save();

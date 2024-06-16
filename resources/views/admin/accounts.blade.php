@@ -130,8 +130,8 @@
                             <div class="mb-3">
                                 <label for="rol" class="form-label">Tipo de usuario</label>
                                 <div class="row">
-                                    <select name="rol" id="rol" class="form-select">
-                                        <option value="{{ old('rol') }}" selected>
+                                    <select name="rol" id="role" class="form-select">
+                                        <option value="{{ old('rol') }}" selected="selected">
                                             @if (old('rol') == null)
                                                 Seleccione un tipo de usuario
                                             @else
@@ -148,7 +148,7 @@
                                     <span class="text-danger">{{ $errors->first('rol') }}</span>
                                 @endif
                             </div>
-                            <div class="mb-3" id="docente">
+                            <div class="mb-3" id="dep">
                                 <label for="department" class="form-label">Departamento y Area</label>
                                 <div class="row">
                                     <select name="department" id="department" class="form-select">
@@ -182,16 +182,18 @@
     </div>
     </div>
     <script>
-        const lineSelect = document.getElementById('rol');
-        const otraActividadDiv = document.getElementById('docente');
+        const lineSelect = document.getElementById('role');
+        const otraActividadDiv = document.getElementById('dep');
         const other_bussines_line = document.getElementById('department');
 
         lineSelect.addEventListener('change', function() {
             const selectedValue = lineSelect.value;
+
             if (selectedValue === 'Docente') {
                 otraActividadDiv.style.display = 'block';
                 other_bussines_line.value = null;
             } else {
+
                 otraActividadDiv.style.display = 'none';
                 other_bussines_line.value = selectedValue;
             }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\UserAccessController;
+use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\PdfDocumentController;
 use App\Http\Controllers\TrabajoAcademicoController;
@@ -31,16 +32,6 @@ Route::controller(UserAccessController::class)->group(function () {
 });
 
 Route::match(['get', 'post'], 'logout', [UserAccessController::class, 'logout'])->name('logout');
-
-Route::get('/prueba', function () {
-    return view('prueba');
-})->name('prueba');
-
-Route::middleware(['auth', 'user.session'])->group(function () {
-    Route::get('/prueba2', function () {
-        return view('prueba');
-    });
-});
 
 Route::controller(TrabajoAcademicoController::class)->group(function () {
     Route::get('/trabajoTerminal', 'index')->name('trabajo.index');
@@ -75,6 +66,16 @@ Route::middleware(['auth', 'user.session'])->controller(AdminController::class)-
     Route::get('/ttDetails/{id}', 'ttDetails')->name('admin.ttDetails');
 });
 
-Route::get('/estudiante', [EstudianteController::class, 'index'])->name('estudiante.index');
+Route::middleware(['auth', 'user.session'])->controller(EstudianteController::class)->prefix('estudiante')->group(function () {
+    Route::prefix('/{id_estudiante}')->group(function () {
+        Route::get('/', 'index')->name('estudiante.index');
 
-Route::get('/consultarTrabajos', [EstudianteController::class, 'consultarTrabajos'])->name('estudiante.consultarTrabajos');
+        Route::get('/consultarTrabajos', 'consultarTrabajos')->name('estudiante.consultarTrabajos');
+    });
+});
+
+Route::middleware(['auth', 'user.session'])->controller(DocenteController::class)->prefix('docente')->group(function () {
+    Route::prefix('/{id_docente}')->group(function () {
+        Route::get('/', 'index')->name('docente.index');
+    });
+});
