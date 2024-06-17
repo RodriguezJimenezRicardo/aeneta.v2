@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\UserAccessController;
 use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\PdfDocumentController;
+use App\Http\Controllers\TitulacionController;
 use App\Http\Controllers\TrabajoAcademicoController;
 use Illuminate\Support\Facades\Route;
 
@@ -49,27 +50,37 @@ Route::middleware(['auth', 'user.session'])->controller(AdminController::class)-
 
     Route::delete('/destroyUser', 'destroyUser')->name('admin.destroyUser');
 
+    Route::get('/procesost', 'procesost')->name('admin.procesost');
+
     Route::get('/agregarSinodal', 'agregarSinodal')->name('admin.agregarSinodal');
 
     Route::post('/addSinodales', 'addSinodales')->name('admin.addSinodales');
 
-    
+
     Route::get('/ttList', 'ttList')->name('admin.ttList');
     Route::get('/ttDetails/{id}', 'ttDetails')->name('admin.ttDetails');
-    
-    Route::get('/SubirTerminado',  'SubirTerminadoForm')->name('admin.subirTerminadoForm');
-    Route::post('/SubirTerminado', 'SubirTerminado')->name('admin.SubirTerminado');
 
-    Route::post('/Aprobar/{id}/{aprobado}','AprobarRegistro')->name('admin.Aprobar');
+    Route::get('/SubirTerminado', 'subirTerminadoForm')->name('admin.subirTerminadoForm');
+    Route::post('/SubirTerminado', 'subirTerminado')->name('admin.SubirTerminado');
+
+    Route::post('/Aprobar/{id}/{aprobado}', 'aprobarRegistro')->name('admin.Aprobar');
+});
+
+Route::middleware(['auth', 'user.session'])->controller(TitulacionController::class)->prefix('admin')->group(function () {
+    Route::post('/createT', 'createT')->name('titulacion.create');
+
+    Route::post('/updateT', 'updateT')->name('titulacion.update');
+
+    Route::delete('/destroy', 'destroy')->name('titulacion.destroy');
 });
 
 Route::middleware(['auth', 'user.session'])->controller(EstudianteController::class)->prefix('estudiante')->group(function () {
     Route::prefix('/{id_estudiante}')->group(function () {
         Route::get('/', 'index')->name('estudiante.index');
 
-        Route::get('/consultarTrabajos','consultarTrabajos')->name('estudiante.consultarTrabajos');
-        Route::get('/RegistrarTrabajo',  'registrarTrabajoForm')->name('estudiante.registrarTrabajoForm');
-        Route::post('/RegistrarTrabajo',  'registrarTrabajo')->name('estudiante.RegistrarTrabajo');        
+        Route::get('/consultarTrabajos', 'consultarTrabajos')->name('estudiante.consultarTrabajos');
+        Route::get('/RegistrarTrabajo', 'registrarTrabajoForm')->name('estudiante.registrarTrabajoForm');
+        Route::post('/RegistrarTrabajo', 'registrarTrabajo')->name('estudiante.RegistrarTrabajo');
     });
 });
 

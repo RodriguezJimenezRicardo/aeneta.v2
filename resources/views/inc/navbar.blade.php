@@ -11,9 +11,12 @@
                 <li class="nav-item px-4">
                     <a class="nav-link active" href="{{ route('admin.accounts') }}">Cuentas</a>
                 </li>
-
                 <li class="nav-item px-4">
-                    <a class="nav-link active" href="{{ route('admin.subirTerminadoForm') }}">Subir trbajos terminados</a>
+                    <a class="nav-link active" href="{{ route('admin.procesost') }}">Procesos de titulación</a>
+                </li>
+                <li class="nav-item px-4">
+                    <a class="nav-link active" href="{{ route('admin.subirTerminadoForm') }}">Subir trbajos
+                        terminados</a>
                 </li>
                 <li class="nav-item px-4">
                     <a class="nav-link active" href="{{ route('admin.ttList') }}">Listado de trabajos terminales</a>
