@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
     <div class="container">
-        <a class="navbar-brand" href="/">{{ env('APP_NAME') }}</a>
+        <a class="navbar-brand" href="/admin">{{ env('APP_NAME') }}</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbarIntranet">
             <span class="navbar-toggler-icon"></span>
@@ -13,10 +13,10 @@
                 </li>
 
                 <li class="nav-item px-4">
-                    <a class="nav-link active" href="#">Facturas</a>
+                    <a class="nav-link active" href="{{ route('admin.subirTerminadoForm') }}">Subir trbajos terminados</a>
                 </li>
                 <li class="nav-item px-4">
-                    <a class="nav-link active" href="#">Cotizaciones</a>
+                    <a class="nav-link active" href="{{ route('admin.ttList') }}">Listado de trabajos terminales</a>
                 </li>
                 <li class="navbar-nav px-4">
                     <a class="nav-link active" href="#">Comprobantes de pago</a>

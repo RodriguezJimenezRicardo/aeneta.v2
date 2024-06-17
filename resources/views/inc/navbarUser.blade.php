@@ -1,6 +1,26 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
     <div class="container">
-        <a class="navbar-brand" href="/">{{ env('APP_NAME') }}</a>
+        <a class="navbar-brand" @if (Session::get('user'))
+            @switch(Session::get('user')->rol)
+                @case('Estudiante')
+                    @if ($navbar)
+                        href="{{ route('estudiante.index',['id_estudiante' => $id_estudiante]) }}"
+                    @else
+                        href="/"
+                    @endif
+                @break
+
+                @case('Docente')
+                    @if ($navbar)
+                        href="{{ route('docente.index',['id_docente' => $id_docente]) }}"
+                    @else
+                        href="/"
+                    @endif
+                @break
+            @endswitch            
+        @else
+            
+        @endif href="/">{{ env('APP_NAME') }}</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbarIntranet">
             <span class="navbar-toggler-icon"></span>
@@ -12,14 +32,14 @@
                     @if ($navbar)
                         <ul class="navbar-nav px-5">
                             <li class="nav-item px-4">
-                                <a class="nav-link active" href="#">Estudiante</a>
+                                <a class="nav-link active" href="{{ route('estudiante.consultarTrabajos', ['id_estudiante' => $id_estudiante] ) }}">Historial de trabajo Academico</a>
                             </li>
 
                             <li class="nav-item px-4">
-                                <a class="nav-link active" href="#">Estudiante</a>
+                                <a class="nav-link active" href="{{ route('estudiante.registrarTrabajoForm', ['id_estudiante' => $id_estudiante] ) }}">Registrar Trabajo Nuevo</a>
                             </li>
                             <li class="nav-item px-4">
-                                <a class="nav-link active" href="#">Estudiante</a>
+                                <a class="nav-link active" href= >Historial de trabajos</a>
                             </li>
                             <li class="navbar-nav px-4">
                                 <a class="nav-link active" href="#">Estudiante</a>

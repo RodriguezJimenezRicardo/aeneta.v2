@@ -1,4 +1,4 @@
-@extends('layouts.baseUser', ['navbar' => true])
+@extends('layouts.baseUser', ['navbar' => true,'id_estudiante' => $estudiante->id_estudiante])
 
 @section('content')
     <div class="container mt-5">

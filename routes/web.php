@@ -33,18 +33,8 @@ Route::controller(UserAccessController::class)->group(function () {
 
 Route::match(['get', 'post'], 'logout', [UserAccessController::class, 'logout'])->name('logout');
 
-Route::controller(TrabajoAcademicoController::class)->group(function () {
-    Route::get('/trabajoTerminal', 'index')->name('trabajo.index');
-});
-Route::controller(TrabajoAcademicoController::class)->group(function () {
-    Route::get('/subirTrabajo', 'SubirTrabajo')->name('trabajo.subir');
-});
 
-Route::get('/SubirTerminado', [PdfDocumentController::class, 'SubirTerminadoForm'])->name('trabajo.subirTerminadoForm');
-Route::post('/SubirTerminado', [PdfDocumentController::class, 'SubirTerminado'])->name('SubirTerminado');
 
-Route::get('/RegistrarTrabajo', [PdfDocumentController::class, 'registrarTrabajoForm'])->name('trabajo.registrarTrabajoForm');
-Route::post('/RegistrarTrabajo', [PdfDocumentController::class, 'registrarTrabajo'])->name('RegistrarTrabajo');
 
 Route::get('/pdf/{id}/preview', [PdfDocumentController::class, 'showPdfPreview'])->name('pdf.preview'); #vista para mostrar el menu con el pdf
 Route::get('/pdf/{id}/show', [PdfDocumentController::class, 'showPdf'])->name('pdf.show'); #muestra todo el pdf
@@ -63,16 +53,26 @@ Route::middleware(['auth', 'user.session'])->controller(AdminController::class)-
 
     Route::post('/addSinodales', 'addSinodales')->name('admin.addSinodales');
 
+    
+    Route::get('/ttList', 'ttList')->name('admin.ttList');
     Route::get('/ttDetails/{id}', 'ttDetails')->name('admin.ttDetails');
+    
+    Route::get('/SubirTerminado',  'SubirTerminadoForm')->name('admin.subirTerminadoForm');
+    Route::post('/SubirTerminado', 'SubirTerminado')->name('admin.SubirTerminado');
+
+    Route::post('/Aprobar/{id}/{aprobado}','AprobarRegistro')->name('admin.Aprobar');
 });
 
 Route::middleware(['auth', 'user.session'])->controller(EstudianteController::class)->prefix('estudiante')->group(function () {
     Route::prefix('/{id_estudiante}')->group(function () {
         Route::get('/', 'index')->name('estudiante.index');
 
-        Route::get('/consultarTrabajos', 'consultarTrabajos')->name('estudiante.consultarTrabajos');
+        Route::get('/consultarTrabajos','consultarTrabajos')->name('estudiante.consultarTrabajos');
+        Route::get('/RegistrarTrabajo',  'registrarTrabajoForm')->name('estudiante.registrarTrabajoForm');
+        Route::post('/RegistrarTrabajo',  'registrarTrabajo')->name('estudiante.RegistrarTrabajo');        
     });
 });
+
 
 Route::middleware(['auth', 'user.session'])->controller(DocenteController::class)->prefix('docente')->group(function () {
     Route::prefix('/{id_docente}')->group(function () {

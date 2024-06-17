@@ -1,26 +1,62 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalles del Trabajo Terminal</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <h1>descripcion del Trabajo Terminal</h1>
-        <h2>{{ $trabajo->titulo }}</h2>
-        <p>{{ $trabajo->descripcion }}</p>
-        <h3>Lista de Sinodales</h3>
-        <ul>
-            @foreach ($sinodales as $profesor)
-                <li>{{ $profesor->nombre }}</li>
-            @endforeach
-        </ul>
-        <a href="{{ route('admin.agregarSinodal') }}" class="btn btn-primary">Volver a Agregar Sinodales</a>
-        
-        <a href="{{ route('admin.index') }}" class="btn btn-primary">Volver a Panel de Administración</a>
+@extends('layouts.base', ['navbar' => true])
+
+@section('content')
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h1>Consultar Detalles del Trabajo Terminal</h1>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title">{{ $trabajo->titulo }}</h2>
+            <p class="card-text">{{ $trabajo->descripcion }}</p>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Lista de Sinodales</h3>
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach ($sinodales as $profesor)
+                        <li class="list-group-item">{{ $profesor->nombre }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Lista de Directores</h3>
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach ($directores as $director)
+                        <li class="list-group-item">{{ $director->nombre }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Lista de Participantes</h3>
+                </div>
+                <ul class="list-group list-group-flush">
+                    @foreach ($participantes as $participante)
+                        <li class="list-group-item">{{ $participante->nombre }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h1 class="card-title">Previsualización de PDF</h1>
+            <iframe src="{{ route('pdf.show', ['id' => $trabajo->id_trabajoAcademico]) }}" width="100%" height="600" class="border-0"></iframe>
+        </div>
+    </div>
+    <div class="text-center">
+        <a href="{{ route('admin.ttList') }}" class="btn btn-primary">Volver al Listado de Trabajos Terminales</a>
+    </div>
+</div>
+@endsection

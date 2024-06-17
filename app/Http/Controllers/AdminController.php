@@ -161,7 +161,11 @@ class AdminController extends Controller
 
         return redirect()->back()->with(['success' => 'Usuario eliminado con éxito']);
     }
-
+    public function ttList()
+    {
+        $trabajos = DB::table('trabajoacademico')->get();
+        return view('admin.ttList', ['trabajos' => $trabajos]);
+    }
     public function agregarSinodal()
     {
         $trabajosConSinodales = DB::table('sinodal_trabajoacademico')
@@ -202,7 +206,120 @@ class AdminController extends Controller
     public function ttDetails($id)
     {
         $trabajo = DB::table('trabajoacademico')->where('id_trabajoAcademico', $id)->first();
-        $sinodales = session('sinodales', []);
-        return view('admin.ttDetails', ['trabajo' => $trabajo, 'sinodales' => $sinodales]);
+        //buscar sinodales en  sinodal_trabajoacademico y luego ese id en docente
+        $listaSinodales = DB::table('sinodal_trabajoacademico')
+            ->where('id_trabajoAcademico', $id)
+            ->pluck('id_sinodal')
+            ->toArray();
+        if ($listaSinodales == null) {
+            $sinodales = [];
+        }else{
+            foreach ($listaSinodales as $sinodal) {
+                $sinodales[] = DB::table('docente')->where('id_docente', $sinodal)->first();
+            }
+        }
+        
+        $listaDirector = DB::table('director_trabajoacademico')
+            ->where('id_trabajoAcademico', $id)
+            ->pluck('id_docente')
+            ->toArray();
+        if ($listaDirector == null) {
+            $directores = [];
+        }else{
+            foreach ($listaDirector as $director) {
+                $directores[] = DB::table('docente')->where('id_docente', $director)->first();
+            }
+        }
+        
+        $listaDeParticipantes = DB::table('estudiante')
+            ->where('id_trabajoAcademico', $id)
+            ->pluck('id_estudiante')
+            ->toArray();
+        if ($listaDeParticipantes == null) {
+            $participantes = [];
+        }else{
+            foreach ($listaDeParticipantes as $participante) {
+                $participantes[] = DB::table('estudiante')->where('id_estudiante', $participante)->first();
+            }
+        }
+        
+        return view('admin.ttDetails', ['trabajo' => $trabajo, 'sinodales' => $sinodales, 'directores' => $directores, 'participantes' => $participantes]);
+    }
+    public function SubirTerminado(Request $request)
+    {
+        try {
+            // Validar la solicitud
+            $request->validate([
+                'pdf_file' => 'required|mimes:pdf|max:2048', // Limita a archivos PDF con un tamaño máximo de 2MB
+            ]);
+
+            // Obtener el contenido del archivo PDF
+            $pdfContent = file_get_contents($request->file('pdf_file')->getRealPath());
+
+            // Guardar en la base de datos
+            DB::table('trabajoacademico')->insert([
+                'id_tipoTrabajo' => $request->input('tipoTrabajoAcademico'),
+                'titulo' => $request->input('titulo'),
+                'descripcion' => $request->input('descripcion'),
+                'fecha_inicio' => $request->input('fechaInicio'),
+                'fecha_final' => $request->input('fechaFinal'),
+                'id_area' => $request->input('area'),
+                'contenido' => $pdfContent,
+                'status' => 'Terminado',
+            ]);
+
+            $trabajoId = DB::getPdo()->lastInsertId();
+            $sinodales = $request->input('sinodales', []);
+
+            foreach ($sinodales as $sinodal) {
+                DB::table('sinodal_trabajoacademico')->insert([
+                    'id_sinodal' => $sinodal,
+                    'id_trabajoAcademico' => $trabajoId,
+                ]);
+            }
+            DB::table('director_trabajoacademico')->insert([
+                'id_docente' =>  $request->input('director'),
+                'id_trabajoAcademico' => $trabajoId,
+            ]);
+            DB::table('director_trabajoacademico')->insert([
+                'id_docente' =>  $request->input('director'),
+                'id_trabajoAcademico' => $trabajoId,
+            ]);
+            $participantes = $request->input('integrantes', []);
+            foreach ($participantes as $participante) {
+                DB::table('estudiante')
+                    ->where('id_estudiante', $participante)
+                    ->update(['id_trabajoAcademico' => $trabajoId]);
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
+        }
+        return redirect()->back()->with('success', 'PDF subido correctamente.');
+    }
+
+    public function SubirTerminadoForm()
+    {
+        return view('trabajo.subirTerminadoForm');
+    }
+    public function AprobarRegistro($id, $aprobado)
+    {
+        try {
+            $nuevoEstatus = $aprobado === 'Si' ? 'Aprobado' : 'Rechazado';
+
+            // Actualizar el estado del trabajo académico
+            DB::table('trabajoacademico')
+                ->where('id_trabajoAcademico', $id)
+                ->update(['status' => $nuevoEstatus]);
+
+            // Obtener los trabajos académicos que están terminados
+            $trabajos = DB::table('trabajoacademico')->where('status', 'Terminado')->get();
+
+            // Redirigir con un mensaje de éxito
+            return redirect()->route('admin.ttList')->with('success', 'El trabajo académico ha sido ' . strtolower($nuevoEstatus) . ' correctamente.');
+        } catch (\Exception $e) {
+            // Manejar errores y redirigir con un mensaje de error
+            return redirect()->route('admin.ttList')->with('error', 'Hubo un problema al actualizar el estado del trabajo académico: ' . $e->getMessage());
+        }
     }
 }
