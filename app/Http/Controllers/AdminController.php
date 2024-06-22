@@ -6,8 +6,10 @@ use App\Mail\NewUserEmail;
 use App\Models\Departamento;
 use App\Models\Docente;
 use App\Models\Estudiante;
+use App\Models\Titulacion;
 use App\Models\User;
 use Exception;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -17,11 +19,17 @@ class AdminController extends Controller
 {
     public function index()
     {
+        if (session('user')->rol != 'Administrador') {
+            return badRequest('No tienes permisos suficientes');
+        }
         return view('admin.index');
     }
 
     public function accounts()
     {
+        if (session('user')->rol != 'Administrador') {
+            return badRequest('No tienes permisos suficientes');
+        }
         $users = User::with('docentes', 'estudiantes')->get();
         //dump($users);
         $departments = Departamento::with('areas')->get();
@@ -31,6 +39,9 @@ class AdminController extends Controller
 
     public function addUser(Request $request)
     {
+        if (session('user')->rol != 'Administrador') {
+            return badRequest('No tienes permisos suficientes');
+        }
         $request->validate(
             [
                 'email'         => 'required|email|max:150|unique:Users',
@@ -137,6 +148,9 @@ class AdminController extends Controller
 
     public function destroyUser(Request $request)
     {
+        if (session('user')->rol != 'Administrador') {
+            return badRequest('No tienes permisos suficientes');
+        }
         try {
             switch ($request->rol) {
                 case 'Estudiante':
@@ -161,6 +175,16 @@ class AdminController extends Controller
 
         return redirect()->back()->with(['success' => 'Usuario eliminado con éxito']);
     }
+
+    public function procesost()
+    {
+        if (session('user')->rol != 'Administrador') {
+            return badRequest('No tienes permisos suficientes');
+        }
+        $titulaciones = Titulacion::all();
+
+        return view('admin.titulaciones')->with(['titulaciones' => $titulaciones]);
+    }
     public function ttList()
     {
         $trabajos = DB::table('trabajoacademico')->get();
@@ -176,39 +200,47 @@ class AdminController extends Controller
             ->toArray();
         if ($listaSinodales == null) {
             $sinodales = [];
-        }else{
+        } else {
             foreach ($listaSinodales as $sinodal) {
                 $sinodales[] = DB::table('docente')->where('id_docente', $sinodal)->first();
             }
         }
-        
+
         $listaDirector = DB::table('director_trabajoacademico')
             ->where('id_trabajoAcademico', $id)
             ->pluck('id_docente')
             ->toArray();
         if ($listaDirector == null) {
             $directores = [];
-        }else{
+        } else {
             foreach ($listaDirector as $director) {
                 $directores[] = DB::table('docente')->where('id_docente', $director)->first();
             }
         }
-        
+
         $listaDeParticipantes = DB::table('estudiante')
             ->where('id_trabajoAcademico', $id)
             ->pluck('id_estudiante')
             ->toArray();
         if ($listaDeParticipantes == null) {
             $participantes = [];
-        }else{
+        } else {
             foreach ($listaDeParticipantes as $participante) {
                 $participantes[] = DB::table('estudiante')->where('id_estudiante', $participante)->first();
             }
         }
-        
-        return view('admin.ttDetails', ['trabajo' => $trabajo, 'sinodales' => $sinodales, 'directores' => $directores, 'participantes' => $participantes]);
+
+        return view(
+            'admin.ttDetails',
+            [
+                'trabajo' => $trabajo,
+                'sinodales' => $sinodales,
+                'directores' => $directores,
+                'participantes' => $participantes
+            ]
+        );
     }
-    public function SubirTerminado(Request $request)
+    public function subirTerminado(Request $request)
     {
         try {
             // Validar la solicitud
@@ -261,11 +293,11 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'PDF subido correctamente.');
     }
 
-    public function SubirTerminadoForm()
+    public function subirTerminadoForm()
     {
         return view('trabajo.subirTerminadoForm');
     }
-    public function AprobarRegistro($id, $aprobado)
+    public function aprobarRegistro($id, $aprobado)
     {
         try {
             $nuevoEstatus = $aprobado === 'Si' ? 'Aprobado' : 'Rechazado';
@@ -279,10 +311,20 @@ class AdminController extends Controller
             $trabajos = DB::table('trabajoacademico')->where('status', 'Terminado')->get();
 
             // Redirigir con un mensaje de éxito
-            return redirect()->route('admin.ttList')->with('success', 'El trabajo académico ha sido ' . strtolower($nuevoEstatus) . ' correctamente.');
+            return redirect()->route('admin.ttList')
+                ->with('success', 'El trabajo académico ha sido ' . strtolower($nuevoEstatus) . ' correctamente.');
         } catch (\Exception $e) {
             // Manejar errores y redirigir con un mensaje de error
-            return redirect()->route('admin.ttList')->with('error', 'Hubo un problema al actualizar el estado del trabajo académico: ' . $e->getMessage());
+            return redirect()->route('admin.ttList')
+                ->with('error', 'Hubo un problema al actualizar el estado del trabajo académico: ' . $e->getMessage());
+        }
+    }
+
+    //HELPERS------------------------------------------------------------------
+    public function userHasAdmin($user)
+    {
+        if (session('user')->rol != 'Administrador') {
+            return badRequest('No tienes permisos suficientes');
         }
     }
     public function ttListSinodales()
