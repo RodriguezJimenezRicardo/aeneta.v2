@@ -1,56 +1,76 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar Sinodal</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
-    <script>
-        function addSinodal() {
-            const sinodalesContainer = document.getElementById('sinodalesContainer');
-            if (sinodalesContainer.children.length < 3) {  // Limita a 3 sinodales
-                const newSinodalDiv = document.createElement('div');
-                newSinodalDiv.className = 'sinodal-field mb-2';
-                newSinodalDiv.innerHTML = `
-                    <input type="text" name="sinodales[]" class="form-control mb-1" placeholder="Boleta del Sinodal de Trabajo terminal" required>
-                    <button type="button" class="btn btn-danger" onclick="removeSinodal(this)">Eliminar</button>
-                `;
-                sinodalesContainer.appendChild(newSinodalDiv);
-            } else {
-                alert("Solo puedes agregar hasta 3 sinodales.");
-            }
-        }
+@extends('layouts.base', ['navbar' => true])
+<script>
+    function addSinodal() {
+        const sinodalesContainer = document.getElementById('sinodalesContainer');
+        const newSinodalDiv = document.createElement('div');
+        newSinodalDiv.className = 'input-group mb-3';
+        newSinodalDiv.innerHTML = `
+            <select name="sinodales[]" class="form-control sinodal-select" required onchange="updateOptions()">
+                <option value="" disabled selected>Selecciona un Sinodal</option>
+                @foreach ($docentes as $docente)
+                    <option value="{{ $docente->id_docente }}">{{ $docente->nombre }} ({{ $docente->id_docente }})</option>
+                @endforeach
+            </select>
+            <button type="button" class="btn btn-danger" onclick="removeSinodal(this)">Eliminar</button>
+        `;
+        sinodalesContainer.appendChild(newSinodalDiv);
+        updateOptions(); // Update options when a new select is added
+    }
 
-        function removeSinodal(button) {
-            const sinodalDiv = button.parentNode;
-            sinodalDiv.parentNode.removeChild(sinodalDiv);
-        }
-    </script>
-</head>
-<body>
-    <div class="container mt-5">
-        <h1>Agregar Sinodal</h1>
-        <form action="{{ route('admin.addSinodales') }}" method="POST">
-            @csrf
-            <div class="form-group">
-                <label for="tt">Selecciona un Trabajo Terminal:</label>
-                <select name="tt_id" id="tt" class="form-control">
-                    @foreach ($trabajos as $trabajo)
-                        <option value="{{ $trabajo->id_trabajoAcademico }}">{{ $trabajo->titulo }}</option>
+    function removeSinodal(button) {
+        const sinodalDiv = button.parentNode;
+        sinodalDiv.parentNode.removeChild(sinodalDiv);
+        updateOptions(); // Update options when a select is removed
+    }
+
+    function updateOptions() {
+        const selects = document.querySelectorAll('.sinodal-select');
+        const selectedValues = Array.from(selects).map(select => select.value).filter(value => value);
+
+        selects.forEach(select => {
+            const options = select.querySelectorAll('option');
+            options.forEach(option => {
+                if (selectedValues.includes(option.value) && option.value !== select.value) {
+                    option.disabled = true;
+                } else {
+                    option.disabled = false;
+                }
+            });
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        updateOptions(); // Initial update on page load
+    });
+</script>
+@section('content')
+<div class="container mt-5">
+    <h1>Agregar Sinodal</h1>
+    <form action="{{ route('admin.addSinodales') }}" method="POST">
+        @csrf
+        <div class="form-group">
+            <label for="tt">Selecciona un Trabajo Terminal:</label>
+            <select name="tt_id" id="tt" class="form-control">
+                @foreach ($trabajos as $trabajo)
+                    <option value="{{ $trabajo->id_trabajoAcademico }}">{{ $trabajo->titulo }}</option>
+                @endforeach
+            </select>
+        </div>
+        <br>
+        <div id="sinodalesContainer" class="mb-3">
+            <label for="sinodales" class="form-label">Sinodales</label>
+            <div class="input-group mb-3">
+                <select name="sinodales[]" class="form-control sinodal-select" required onchange="updateOptions()">
+                    <option value="" disabled selected>Selecciona un Sinodal</option>
+                    @foreach ($docentes as $docente)
+                        <option value="{{ $docente->id_docente }}">{{ $docente->nombre }} ({{ $docente->id_docente }})</option>
                     @endforeach
                 </select>
             </div>
-            <br>
-            <div id="sinodalesContainer">
-                <div class="sinodal-field mb-2">
-                    <input type="text" name="sinodales[]" class="form-control mb-1" placeholder="Boleta del Sinodal de Trabajo terminal" required>
-                </div>
-            </div>
-            <button type="button" class="btn btn-secondary" onclick="addSinodal()">Agregar Sinodal</button>
-            <br><br>
-            <button type="submit" class="btn btn-primary">Guardar Sinodales</button>
-        </form>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+        </div>
+        <button type="button" class="btn btn-secondary mb-3" onclick="addSinodal()">Agregar Sinodal</button>
+        <br><br>
+        <button type="submit" class="btn btn-primary">Guardar Sinodales</button>
+    </form>
+</div>
+@endsection

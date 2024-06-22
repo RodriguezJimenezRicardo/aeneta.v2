@@ -104,4 +104,70 @@ class EstudianteController extends Controller
         // Validar la solicitud
         
     }
+    public function ttDetails($id_estudiante, $id)
+    {
+        if (session('user')->rol != 'Estudiante') {
+            return badRequest('No tienes permisos suficientes');
+        }else{
+            $trabajo = DB::table('trabajoacademico')->where('id_trabajoAcademico', $id)->first();
+            //buscar sinodales en  sinodal_trabajoacademico y luego ese id en docente
+            $listaSinodales = DB::table('sinodal_trabajoacademico')
+                ->where('id_trabajoAcademico', $id)
+                ->pluck('id_sinodal')
+                ->toArray();
+            if ($listaSinodales == null) {
+                $sinodales = [];
+            }else{
+                foreach ($listaSinodales as $sinodal) {
+                    $sinodales[] = DB::table('docente')->where('id_docente', $sinodal)->first();
+                }
+            }
+            
+            $listaDirector = DB::table('director_trabajoacademico')
+                ->where('id_trabajoAcademico', $id)
+                ->pluck('id_docente')
+                ->toArray();
+            if ($listaDirector == null) {
+                $directores = [];
+            }else{
+                foreach ($listaDirector as $director) {
+                    $directores[] = DB::table('docente')->where('id_docente', $director)->first();
+                }
+            }
+            
+            $listaDeParticipantes = DB::table('estudiante')
+                ->where('id_trabajoAcademico', $id)
+                ->pluck('id_estudiante')
+                ->toArray();
+            if ($listaDeParticipantes == null) {
+                $participantes = [];
+            }else{
+                foreach ($listaDeParticipantes as $participante) {
+                    $participantes[] = DB::table('estudiante')->where('id_estudiante', $participante)->first();
+                }
+            }
+            
+            return view('estudiante.ttDetails', ['trabajo' => $trabajo, 'sinodales' => $sinodales, 'directores' => $directores, 'participantes' => $participantes, 'id_estudiante' => $id_estudiante]);
+        }
+    }
+    public function AprobarRegistro($id_estudiante,$id, $aprobado)
+    {
+        try {
+            $nuevoEstatus = $aprobado === 'Si' ? 'En proceso' : 'Rechazado';
+
+            // Actualizar el estado del trabajo académico
+            DB::table('trabajoacademico')
+                ->where('id_trabajoAcademico', $id)
+                ->update(['status' => $nuevoEstatus]);
+
+            // Obtener los trabajos académicos que están terminados
+            $trabajos = DB::table('trabajoacademico')->where('status', 'Terminado')->get();
+
+            // Redirigir con un mensaje de éxito
+            return redirect()->route('estudiante.consultarTrabajos', ['id_estudiante' => session('user')->id_estudiante])->with('success', 'Estatus cambiado correctamente.');
+        } catch (\Exception $e) {
+            // Manejar errores y redirigir con un mensaje de error
+            return redirect()->route('estudiante.consultarTrabajos')->with('error', 'Hubo un problema al actualizar el estado del trabajo académico: ' . $e->getMessage());
+        }
+    }
 }

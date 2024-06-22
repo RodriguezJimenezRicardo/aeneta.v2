@@ -49,7 +49,7 @@ Route::middleware(['auth', 'user.session'])->controller(AdminController::class)-
 
     Route::delete('/destroyUser', 'destroyUser')->name('admin.destroyUser');
 
-    Route::get('/agregarSinodal', 'agregarSinodal')->name('admin.agregarSinodal');
+    Route::get('/agregarSinodal/{id}', 'agregarSinodal')->name('admin.agregarSinodal');
 
     Route::post('/addSinodales', 'addSinodales')->name('admin.addSinodales');
 
@@ -61,6 +61,7 @@ Route::middleware(['auth', 'user.session'])->controller(AdminController::class)-
     Route::post('/SubirTerminado', 'SubirTerminado')->name('admin.SubirTerminado');
 
     Route::post('/Aprobar/{id}/{aprobado}','AprobarRegistro')->name('admin.Aprobar');
+    Route::get('/ttListSinodales', 'ttListSinodales')->name('admin.ttListSinodales');
 });
 
 Route::middleware(['auth', 'user.session'])->controller(EstudianteController::class)->prefix('estudiante')->group(function () {
@@ -69,7 +70,9 @@ Route::middleware(['auth', 'user.session'])->controller(EstudianteController::cl
 
         Route::get('/consultarTrabajos','consultarTrabajos')->name('estudiante.consultarTrabajos');
         Route::get('/RegistrarTrabajo',  'registrarTrabajoForm')->name('estudiante.registrarTrabajoForm');
-        Route::post('/RegistrarTrabajo',  'registrarTrabajo')->name('estudiante.RegistrarTrabajo');        
+        Route::post('/RegistrarTrabajo',  'registrarTrabajo')->name('estudiante.RegistrarTrabajo');
+        Route::get('/ttDetails/{id}', 'ttDetails')->name('estudiante.ttDetails');       
+        Route::post('/Aprobar/{id}/{aprobado}','AprobarRegistro')->name('estudiante.ConfirmarSinodales'); 
     });
 });
 

@@ -39,7 +39,7 @@
                                 <a class="nav-link active" href="{{ route('estudiante.registrarTrabajoForm', ['id_estudiante' => $id_estudiante] ) }}">Registrar Trabajo Nuevo</a>
                             </li>
                             <li class="nav-item px-4">
-                                <a class="nav-link active" href= >Historial de trabajos</a>
+                                <a class="nav-link active" href= >Versiones Trabajo Academico</a>
                             </li>
                             <li class="navbar-nav px-4">
                                 <a class="nav-link active" href="#">Estudiante</a>

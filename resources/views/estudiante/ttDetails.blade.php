@@ -66,7 +66,7 @@
         </div>
     </div>
     <div class="text-center">
-        <a href="{{ route('admin.ttList') }}" class="btn btn-primary">Volver al Listado de Trabajos Terminales</a>
+        <a href="{{ route('estudiante.consultarTrabajos', ['id_estudiante' => $id_estudiante] ) }}" class="btn btn-primary">Volver al Listado de Trabajos Terminales</a>
     </div>
 </div>
 @endsection
