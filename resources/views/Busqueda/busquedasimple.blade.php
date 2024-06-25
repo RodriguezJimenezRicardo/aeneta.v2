@@ -1,4 +1,4 @@
-@extends('layouts.baseUser', ['navbar' => true])
+@extends('layouts.index', ['navbar' => true])
 
 @section('title', 'Búsqueda Académica')
 
