@@ -25,6 +25,8 @@
         >
         {{ env('APP_NAME') }}</a>
 
+
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbarIntranet">
             <span class="navbar-toggler-icon"></span>
         </button>
