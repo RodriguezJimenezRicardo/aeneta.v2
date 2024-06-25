@@ -22,7 +22,7 @@
                     <a class="nav-link active" href="{{ route('admin.ttList') }}">Listado de trabajos terminales</a>
                 </li>
                 <li class="navbar-nav px-4">
-                    <a class="nav-link active"  href="{{ route('admin.ttListSinodales') }}">Agregar Sinodales</a>
+                    <a class="nav-link active"  href="{{ route('admin.addSinodales') }}">Agregar Sinodales</a>
                 </li>
 
 

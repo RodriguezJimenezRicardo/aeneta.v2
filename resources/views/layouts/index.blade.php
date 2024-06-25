@@ -13,8 +13,8 @@
 <body>
     @include('inc.navIndex')
     <div class="container">
-        @include('inc.messages')
-        @yield('content')
+       @include('inc.messages')
+        <!---@yield('content')-->
     </div>
 </body>
 

@@ -163,6 +163,9 @@
                                             <option value="{{ $department->id_departamento }}">
                                                 {{ $department->id_departamento }}, {{ $department->id_area }}</option>
                                         @endforeach
+                                        <option value="Estudiante">Basicas</option>
+                                        <option value="Docente">Fisico Matematicas</option>
+                                        <option value="Administrador">Administrador</option>
                                     </select>
                                 </div>
                                 <div class="form-text" id="basic-addon4">Este campo es requerido.</div>

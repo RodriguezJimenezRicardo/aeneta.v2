@@ -1,26 +1,29 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
     <div class="container">
-        <a class="navbar-brand" @if (Session::get('user'))
-            @switch(Session::get('user')->rol)
-                @case('Estudiante')
-                    @if ($navbar)
-                        href="{{ route('estudiante.index',['id_estudiante' => $id_estudiante]) }}"
-                    @else
-                        href="/"
-                    @endif
-                @break
+        <a class="navbar-brand" 
+            @if (Session::get('user'))
+                @switch(Session::get('user')->rol)
+                    @case('Estudiante')
+                        @if ($navbar)
+                            href="{{ route('estudiante.index',['id_estudiante' => $id_estudiante]) }}"
+                        @else
+                            href="/"
+                        @endif
+                        @break
 
-                @case('Docente')
-                    @if ($navbar)
-                        href="{{ route('docente.index',['id_docente' => $id_docente]) }}"
-                    @else
-                        href="/"
-                    @endif
-                @break
-            @endswitch            
-        @else
-            
-        @endif href="/">{{ env('APP_NAME') }}</a>
+                    @case('Docente')
+                        @if ($navbar)
+                            href="{{ route('docente.index',['id_docente' => $id_docente]) }}"
+                        @else
+                            href="/"
+                        @endif
+                        @break
+                @endswitch
+                @else
+                      href="/"
+            @endif
+        >
+        {{ env('APP_NAME') }}</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbarIntranet">
             <span class="navbar-toggler-icon"></span>
@@ -34,21 +37,18 @@
                             <li class="nav-item px-4">
                                 <a class="nav-link active" href="{{ route('estudiante.consultarTrabajos', ['id_estudiante' => $id_estudiante] ) }}">Historial de trabajo Academico</a>
                             </li>
-
                             <li class="nav-item px-4">
                                 <a class="nav-link active" href="{{ route('estudiante.registrarTrabajoForm', ['id_estudiante' => $id_estudiante] ) }}">Registrar Trabajo Nuevo</a>
                             </li>
                             <li class="nav-item px-4">
-                                <a class="nav-link active" href= >Versiones Trabajo Academico</a>
-                            </li>
-                            <li class="navbar-nav px-4">
                                 <a class="nav-link active" href="#">Estudiante</a>
                             </li>
-
-
+                            <li class="nav-item px-4">
+                                <a class="nav-link active" href="{{ route('Busqueda') }}">Busqueda</a>
+                            </li>
                         </ul>
                     @endif
-                @break
+                    @break
 
                 @case('Docente')
                     @if ($navbar)
@@ -56,22 +56,20 @@
                             <li class="nav-item px-4">
                                 <a class="nav-link active" href="#">Docente</a>
                             </li>
-
                             <li class="nav-item px-4">
                                 <a class="nav-link active" href="#">Docente</a>
                             </li>
                             <li class="nav-item px-4">
                                 <a class="nav-link active" href="#">Docente</a>
                             </li>
-                            <li class="navbar-nav px-4">
+                            <li class="nav-item px-4">
                                 <a class="nav-link active" href="#">Docente</a>
                             </li>
-
-
                         </ul>
                     @endif
-                @break
+                    @break
             @endswitch
+
             <div class="collapse navbar-collapse navbarIntranet d-flex justify-content-end" id="navbarIntranet2">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown">
@@ -79,22 +77,21 @@
                             {{ Session::get('user')->email }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">Cerrar sesión</a>
-
+                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Cerrar sesión</a>
                         </div>
                     </li>
                 </ul>
             </div>
         @else
             <ul class="navbar-nav ml-auto">
-                <li class="navbar-nav px-4">
-                    <a class="nav-link active" href="{{ route('login') }}">Iniciar sesion</a>
+                <li class="nav-item px-4">
+                    <a class="nav-link active" href="{{ route('login') }}">Iniciar sesión</a>
                 </li>
             </ul>
         @endif
     </div>
 </nav>
+
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -106,11 +103,9 @@
                 ¿Estás seguro de cerrar sesión?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secundario" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <a href="{{ route('logout') }}">
-                    <button type="submit" class="btn btn-principal">
-                        Cerrar sesíon
-                    </button>
+                    <button type="submit" class="btn btn-primary">Cerrar sesión</button>
                 </a>
             </div>
         </div>

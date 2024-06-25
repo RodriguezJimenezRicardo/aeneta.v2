@@ -64,11 +64,13 @@ class EstudianteController extends Controller
 
     public function registrarTrabajo(Request $request)
     {//form de registro de trabajo
+        ini_set('memory_limit','1G');
+
         if (session('user')->rol != 'Estudiante') {
             return badRequest('No tienes permisos suficientes');
         }else{
             $request->validate([
-                'pdf_file' => 'required|mimes:pdf|max:2048', // Limita a archivos PDF con un tamaño máximo de 2MB
+                'pdf_file' => 'required|mimes:pdf|max:30720', // Limita a archivos PDF con un tamaño máximo de 2MB
             ]);
     
             // Obtener el contenido del archivo PDF
@@ -169,5 +171,15 @@ class EstudianteController extends Controller
             // Manejar errores y redirigir con un mensaje de error
             return redirect()->route('estudiante.consultarTrabajos')->with('error', 'Hubo un problema al actualizar el estado del trabajo académico: ' . $e->getMessage());
         }
+    }
+
+    public function mostrarbusqueda(string $id_estudiante)
+    {
+        try {
+            $estudiante = Docente::with('user')->findOrFail($id_estudiente);
+        } catch (Exception $e) {
+            return notFound('estudiente no encontrado');
+        }
+        return view('Busqueda.busquedasimple', ['estudiante' => $estudiante]);
     }
 }

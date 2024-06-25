@@ -240,12 +240,62 @@ class AdminController extends Controller
             ]
         );
     }
+    public function detalles($id)
+    {
+        $trabajo = DB::table('trabajoacademico')->where('id_trabajoAcademico', $id)->first();
+        //buscar sinodales en  sinodal_trabajoacademico y luego ese id en docente
+        $listaSinodales = DB::table('sinodal_trabajoacademico')
+            ->where('id_trabajoAcademico', $id)
+            ->pluck('id_sinodal')
+            ->toArray();
+        if ($listaSinodales == null) {
+            $sinodales = [];
+        } else {
+            foreach ($listaSinodales as $sinodal) {
+                $sinodales[] = DB::table('docente')->where('id_docente', $sinodal)->first();
+            }
+        }
+
+        $listaDirector = DB::table('director_trabajoacademico')
+            ->where('id_trabajoAcademico', $id)
+            ->pluck('id_docente')
+            ->toArray();
+        if ($listaDirector == null) {
+            $directores = [];
+        } else {
+            foreach ($listaDirector as $director) {
+                $directores[] = DB::table('docente')->where('id_docente', $director)->first();
+            }
+        }
+
+        $listaDeParticipantes = DB::table('estudiante')
+            ->where('id_trabajoAcademico', $id)
+            ->pluck('id_estudiante')
+            ->toArray();
+        if ($listaDeParticipantes == null) {
+            $participantes = [];
+        } else {
+            foreach ($listaDeParticipantes as $participante) {
+                $participantes[] = DB::table('estudiante')->where('id_estudiante', $participante)->first();
+            }
+        }
+
+        return view(
+            'Busqueda.detalles',
+            [
+                'trabajo' => $trabajo,
+                'sinodales' => $sinodales,
+                'directores' => $directores,
+                'participantes' => $participantes
+            ]
+        );
+    }
     public function subirTerminado(Request $request)
     {
         try {
             // Validar la solicitud
             $request->validate([
-                'pdf_file' => 'required|mimes:pdf|max:2048', // Limita a archivos PDF con un tamaño máximo de 2MB
+                'pdf_file' => 'required|mimes:pdf|max:65536', // Limita a archivos PDF con un tamaño máximo de 2MB
             ]);
 
             // Obtener el contenido del archivo PDF

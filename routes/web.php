@@ -7,6 +7,7 @@ use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\PdfDocumentController;
 use App\Http\Controllers\TitulacionController;
 use App\Http\Controllers\TrabajoAcademicoController;
+use App\Http\Controllers\BusquedaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +24,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/busqueda', function () {
+    return view('Busqueda.busquedasimple');
+})->name('Busqueda');
+
+
+Route::get('/buscar',[BusquedaController::class, 'buscar'])->name('buscar.trabajos');
+
+// Ruta para mostrar la vista de búsqueda avanzada
+Route::get('/busqueda-avanzada', [BusquedaController::class, 'busquedaAvanzada'])->name('busqueda.avanzada');
+
+// Ruta para manejar la búsqueda avanzada
+Route::get('/buscar-avanzada', [BusquedaController::class, 'buscarAvanzada'])->name('buscar.trabajos.avanzada');
+
 
 Route::controller(UserAccessController::class)->group(function () {
     Route::get('/login', 'loginForm')->name('login');
@@ -61,6 +76,8 @@ Route::middleware(['auth', 'user.session'])->controller(AdminController::class)-
 
     Route::get('/ttList', 'ttList')->name('admin.ttList');
     Route::get('/ttDetails/{id}', 'ttDetails')->name('admin.ttDetails');
+    Route::get('/detalles/{id}', 'detalles')->name('Busqueda.detalles');
+
 
     Route::get('/SubirTerminado', 'subirTerminadoForm')->name('admin.subirTerminadoForm');
     Route::post('/SubirTerminado', 'subirTerminado')->name('admin.SubirTerminado');
