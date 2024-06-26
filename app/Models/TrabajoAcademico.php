@@ -9,7 +9,7 @@ class TrabajoAcademico extends Model
 {
     use HasFactory;
 
-    protected $table = 'trabajoacademico';
+    protected $table = 'TrabajoAcademico';
 
     protected $primaryKey = 'id_trabajoAcademico';
 

@@ -15,14 +15,15 @@
                     <a class="nav-link active" href="{{ route('admin.procesost') }}">Procesos de titulación</a>
                 </li>
                 <li class="nav-item px-4">
-                    <a class="nav-link active" href="{{ route('admin.subirTerminadoForm') }}">Subir trbajos
+                    <a class="nav-link active" href="{{ route('admin.subirTerminadoForm') }}">Subir trabajos
                         terminados</a>
                 </li>
                 <li class="nav-item px-4">
                     <a class="nav-link active" href="{{ route('admin.ttList') }}">Listado de trabajos terminales</a>
                 </li>
                 <li class="navbar-nav px-4">
-                    <a class="nav-link active"  href="{{ route('admin.addSinodales') }}">Agregar Sinodales</a>
+                    <a class="nav-link active" href="{{ route('admin.agregarSinodal', ['id' => 1]) }}">Agregar
+                        Sinodales</a>
                 </li>
 
 

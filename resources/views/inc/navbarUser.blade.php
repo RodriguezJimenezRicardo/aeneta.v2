@@ -1,29 +1,19 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
     <div class="container">
-        <a class="navbar-brand" 
-            @if (Session::get('user'))
-                @switch(Session::get('user')->rol)
+        <a class="navbar-brand"
+            @if (Session::get('user')) @switch(Session::get('user')->rol)
                     @case('Estudiante')
                         @if ($navbar)
-                            href="{{ route('estudiante.index',['id_estudiante' => $id_estudiante]) }}"
+                            href="{{ route('estudiante.index', ['id_estudiante' => $id_estudiante]) }}"
                         @else
-                            href="/"
-                        @endif
-                        @break
-
-                    @case('Docente')
-                        @if ($navbar)
-                            href="{{ route('docente.index',['id_docente' => $id_docente]) }}"
+                            href="/" @endif
+        @break @case('Docente')
+            @if ($navbar) href="{{ route('docente.index', ['id_docente' => $id_docente]) }}"
                         @else
-                            href="/"
-                        @endif
-                        @break
-                @endswitch
-                @else
-                      href="/"
-            @endif
-        >
-        {{ env('APP_NAME') }}</a>
+                            href="/" @endif
+            @break @endswitch @else href="/" @endif
+            >
+            {{ env('APP_NAME') }}</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbarIntranet">
             <span class="navbar-toggler-icon"></span>
@@ -35,20 +25,21 @@
                     @if ($navbar)
                         <ul class="navbar-nav px-5">
                             <li class="nav-item px-4">
-                                <a class="nav-link active" href="{{ route('estudiante.consultarTrabajos', ['id_estudiante' => $id_estudiante] ) }}">Historial de trabajo Academico</a>
+                                <a class="nav-link active"
+                                    href="{{ route('estudiante.consultarTrabajos', ['id_estudiante' => $id_estudiante]) }}">Historial
+                                    de trabajo Academico</a>
                             </li>
                             <li class="nav-item px-4">
-                                <a class="nav-link active" href="{{ route('estudiante.registrarTrabajoForm', ['id_estudiante' => $id_estudiante] ) }}">Registrar Trabajo Nuevo</a>
-                            </li>
-                            <li class="nav-item px-4">
-                                <a class="nav-link active" href="#">Estudiante</a>
+                                <a class="nav-link active"
+                                    href="{{ route('estudiante.registrarTrabajoForm', ['id_estudiante' => $id_estudiante]) }}">Registrar
+                                    Trabajo Nuevo</a>
                             </li>
                             <li class="nav-item px-4">
                                 <a class="nav-link active" href="{{ route('Busqueda') }}">Busqueda</a>
                             </li>
                         </ul>
                     @endif
-                    @break
+                @break
 
                 @case('Docente')
                     @if ($navbar)
@@ -67,7 +58,8 @@
                             </li>
                         </ul>
                     @endif
-                    @break
+                @break
+
             @endswitch
 
             <div class="collapse navbar-collapse navbarIntranet d-flex justify-content-end" id="navbarIntranet2">
@@ -77,7 +69,8 @@
                             {{ Session::get('user')->email }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Cerrar sesión</a>
+                            <a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">Cerrar sesión</a>
                         </div>
                     </li>
                 </ul>

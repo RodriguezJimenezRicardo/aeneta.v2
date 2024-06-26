@@ -22,7 +22,6 @@
                         </div>
                     </div>
                     <div>
-                        ¿No tienes una cuenta? <a class="link-opacity-10-hover" href="/register">Registrarme</a><br><br>
                         ¿Olvidaste tu contraseña? <a class="link-opacity-10-hover" href="/recover/password">Reestablecer
                             contraseña</a>
                     </div>

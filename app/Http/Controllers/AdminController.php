@@ -7,6 +7,7 @@ use App\Models\Departamento;
 use App\Models\Docente;
 use App\Models\Estudiante;
 use App\Models\Titulacion;
+use App\Models\TrabajoAcademico;
 use App\Models\User;
 use Exception;
 use Illuminate\Contracts\Session\Session;
@@ -187,14 +188,14 @@ class AdminController extends Controller
     }
     public function ttList()
     {
-        $trabajos = DB::table('trabajoacademico')->get();
+        $trabajos = DB::table('TrabajoAcademico')->get();
         return view('admin.ttList', ['trabajos' => $trabajos]);
     }
     public function ttDetails($id)
     {
-        $trabajo = DB::table('trabajoacademico')->where('id_trabajoAcademico', $id)->first();
+        $trabajo = DB::table('TrabajoAcademico')->where('id_trabajoAcademico', $id)->first();
         //buscar sinodales en  sinodal_trabajoacademico y luego ese id en docente
-        $listaSinodales = DB::table('sinodal_trabajoacademico')
+        $listaSinodales = DB::table('Sinodal_TrabajoAcademico')
             ->where('id_trabajoAcademico', $id)
             ->pluck('id_sinodal')
             ->toArray();
@@ -202,11 +203,11 @@ class AdminController extends Controller
             $sinodales = [];
         } else {
             foreach ($listaSinodales as $sinodal) {
-                $sinodales[] = DB::table('docente')->where('id_docente', $sinodal)->first();
+                $sinodales[] = DB::table('Docente')->where('id_docente', $sinodal)->first();
             }
         }
 
-        $listaDirector = DB::table('director_trabajoacademico')
+        $listaDirector = DB::table('Director_TrabajoAcademico')
             ->where('id_trabajoAcademico', $id)
             ->pluck('id_docente')
             ->toArray();
@@ -214,11 +215,11 @@ class AdminController extends Controller
             $directores = [];
         } else {
             foreach ($listaDirector as $director) {
-                $directores[] = DB::table('docente')->where('id_docente', $director)->first();
+                $directores[] = DB::table('Docente')->where('id_docente', $director)->first();
             }
         }
 
-        $listaDeParticipantes = DB::table('estudiante')
+        $listaDeParticipantes = DB::table('Estudiante')
             ->where('id_trabajoAcademico', $id)
             ->pluck('id_estudiante')
             ->toArray();
@@ -226,7 +227,7 @@ class AdminController extends Controller
             $participantes = [];
         } else {
             foreach ($listaDeParticipantes as $participante) {
-                $participantes[] = DB::table('estudiante')->where('id_estudiante', $participante)->first();
+                $participantes[] = DB::table('Estudiante')->where('id_estudiante', $participante)->first();
             }
         }
 
@@ -242,9 +243,9 @@ class AdminController extends Controller
     }
     public function detalles($id)
     {
-        $trabajo = DB::table('trabajoacademico')->where('id_trabajoAcademico', $id)->first();
+        $trabajo = DB::table('TrabajoAcademico')->where('id_trabajoAcademico', $id)->first();
         //buscar sinodales en  sinodal_trabajoacademico y luego ese id en docente
-        $listaSinodales = DB::table('sinodal_trabajoacademico')
+        $listaSinodales = DB::table('Sinodal_TrabajoAcademico')
             ->where('id_trabajoAcademico', $id)
             ->pluck('id_sinodal')
             ->toArray();
@@ -252,11 +253,11 @@ class AdminController extends Controller
             $sinodales = [];
         } else {
             foreach ($listaSinodales as $sinodal) {
-                $sinodales[] = DB::table('docente')->where('id_docente', $sinodal)->first();
+                $sinodales[] = DB::table('Docente')->where('id_docente', $sinodal)->first();
             }
         }
 
-        $listaDirector = DB::table('director_trabajoacademico')
+        $listaDirector = DB::table('Director_TrabajoAcademico')
             ->where('id_trabajoAcademico', $id)
             ->pluck('id_docente')
             ->toArray();
@@ -264,11 +265,11 @@ class AdminController extends Controller
             $directores = [];
         } else {
             foreach ($listaDirector as $director) {
-                $directores[] = DB::table('docente')->where('id_docente', $director)->first();
+                $directores[] = DB::table('Docente')->where('id_docente', $director)->first();
             }
         }
 
-        $listaDeParticipantes = DB::table('estudiante')
+        $listaDeParticipantes = DB::table('Estudiante')
             ->where('id_trabajoAcademico', $id)
             ->pluck('id_estudiante')
             ->toArray();
@@ -276,7 +277,7 @@ class AdminController extends Controller
             $participantes = [];
         } else {
             foreach ($listaDeParticipantes as $participante) {
-                $participantes[] = DB::table('estudiante')->where('id_estudiante', $participante)->first();
+                $participantes[] = DB::table('Estudiante')->where('id_estudiante', $participante)->first();
             }
         }
 
@@ -302,7 +303,7 @@ class AdminController extends Controller
             $pdfContent = file_get_contents($request->file('pdf_file')->getRealPath());
 
             // Guardar en la base de datos
-            DB::table('trabajoacademico')->insert([
+            DB::table('TrabajoAcademico')->insert([
                 'id_tipoTrabajo' => $request->input('tipoTrabajoAcademico'),
                 'titulo' => $request->input('titulo'),
                 'descripcion' => $request->input('descripcion'),
@@ -317,26 +318,22 @@ class AdminController extends Controller
             $sinodales = $request->input('sinodales', []);
 
             foreach ($sinodales as $sinodal) {
-                DB::table('sinodal_trabajoacademico')->insert([
+                DB::table('Sinodal_TrabajoAcademico')->insert([
                     'id_sinodal' => $sinodal,
                     'id_trabajoAcademico' => $trabajoId,
                 ]);
             }
-            DB::table('director_trabajoacademico')->insert([
-                'id_docente' =>  $request->input('director'),
-                'id_trabajoAcademico' => $trabajoId,
-            ]);
-            DB::table('director_trabajoacademico')->insert([
+            DB::table('Director_TrabajoAcademico')->insert([
                 'id_docente' =>  $request->input('director'),
                 'id_trabajoAcademico' => $trabajoId,
             ]);
             $participantes = $request->input('integrantes', []);
             foreach ($participantes as $participante) {
-                DB::table('estudiante')
+                DB::table('Estudiante')
                     ->where('id_estudiante', $participante)
                     ->update(['id_trabajoAcademico' => $trabajoId]);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             dd($e);
         }
@@ -353,12 +350,12 @@ class AdminController extends Controller
             $nuevoEstatus = $aprobado === 'Si' ? 'Aprobado' : 'Rechazado';
 
             // Actualizar el estado del trabajo académico
-            DB::table('trabajoacademico')
+            DB::table('TrabajoAcademico')
                 ->where('id_trabajoAcademico', $id)
                 ->update(['status' => $nuevoEstatus]);
 
             // Obtener los trabajos académicos que están terminados
-            $trabajos = DB::table('trabajoacademico')->where('status', 'Terminado')->get();
+            $trabajos = DB::table('TrabajoAcademico')->where('status', 'Terminado')->get();
 
             // Redirigir con un mensaje de éxito
             return redirect()->route('admin.ttList')
@@ -380,10 +377,10 @@ class AdminController extends Controller
     public function ttListSinodales()
     {
         //obtener los trabajos que no tienen sinodales asignados
-        $trabajosConSinodales = DB::table('sinodal_trabajoacademico')
+        $trabajosConSinodales = DB::table('Sinodal_TrabajoAcademico')
             ->pluck('id_trabajoAcademico')
             ->toArray();
-        $trabajosSinSinodales = DB::table('trabajoacademico')
+        $trabajosSinSinodales = DB::table('TrabajoAcademico')
             ->whereNotIn('id_trabajoAcademico', $trabajosConSinodales)
             ->get();
         return view('admin.ttListSinodales', ['trabajos' => $trabajosSinSinodales]);
@@ -391,9 +388,9 @@ class AdminController extends Controller
     public function agregarSinodal(string $id)
     {
         //obtener el trabajo academico con el id que le llega
-        $trabajos = DB::table('trabajoacademico')->where('id_trabajoAcademico', $id)->get();
+        $trabajos = TrabajoAcademico::all(); //DB::table('TrabajoAcademico')->where('id_trabajoAcademico', $id)->get();
         //obtener lista de los docentes
-        $docentes = DB::table('docente')->get();
+        $docentes = Docente::all(); //DB::table('Docente')->get();
         return view('admin.agregarSinodal', ['trabajos' => $trabajos, 'docentes' => $docentes]);
     }
     public function addSinodales(Request $request)
@@ -403,12 +400,12 @@ class AdminController extends Controller
 
         foreach ($sinodales as $sinodal) {
             try {
-                DB::table('sinodal_trabajoacademico')->insert([
+                DB::table('Sinodal_TrabajoAcademico')->insert([
                     'id_sinodal' => $sinodal,
                     'id_trabajoAcademico' => $ttId,
                 ]);
                 #cambiar el status del trabajo academico
-                DB::table('trabajoacademico')
+                DB::table('TrabajoAcademico')
                     ->where('id_trabajoAcademico', $ttId)
                     ->update(['status' => 'Sinodales asignados']);
             } catch (\Exception $e) {
@@ -416,7 +413,7 @@ class AdminController extends Controller
                 return redirect()->back()->with('error', 'Error al agregar sinodales: ' . $e->getMessage());
             }
         }
-        $sinodalesInfo = DB::table('docente')->whereIn('id_docente', $sinodales)->get();
+        $sinodalesInfo = DB::table('Docente')->whereIn('id_docente', $sinodales)->get();
         return redirect()->route('admin.ttDetails', ['id' => $ttId])
             ->with('success', 'Sinodales agregados correctamente.')->with('sinodales', $sinodalesInfo);
     }

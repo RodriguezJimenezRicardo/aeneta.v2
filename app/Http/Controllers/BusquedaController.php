@@ -13,7 +13,7 @@ class BusquedaController extends Controller
         $query = $request->input('query');
 
         // Realizar la búsqueda en la tabla trabajoterminal
-        $trabajos = DB::table('trabajoacademico')
+        $trabajos = DB::table('TrabajoAcademico')
             ->where('id_tipoTrabajo', 'like', '%' . $query . '%')
             ->orWhere('titulo', 'like', '%' . $query . '%')
             ->orWhere('descripcion', 'like', '%' . $query . '%')
@@ -36,7 +36,7 @@ class BusquedaController extends Controller
     // Método para manejar la búsqueda avanzada
     public function buscarAvanzada(Request $request)
     {
-        $query = DB::table('trabajoacademico');
+        $query = DB::table('TrabajoAcademico');
 
         if ($request->filled('tipoTrabajo')) {
             $query->where('id_tipoTrabajo', 'like', '%' . $request->tipoTrabajo . '%');
@@ -63,10 +63,10 @@ class BusquedaController extends Controller
         }
 
         if ($request->filled('nombreAlumno')) {
-            $alumnoIds = DB::table('estudiante')
+            $alumnoIds = DB::table('Estudiante')
                 ->where(function ($query) use ($request) {
                     $query->where('nombre', 'like', '%' . $request->nombreAlumno . '%')
-                          ->orWhere('apellido', 'like', '%' . $request->nombreAlumno . '%');
+                        ->orWhere('apellido', 'like', '%' . $request->nombreAlumno . '%');
                 })
                 ->pluck('id_trabajoAcademico');
             $query->whereIn('id_trabajoAcademico', $alumnoIds);
@@ -84,4 +84,3 @@ class BusquedaController extends Controller
         return view('Busqueda.busquedaavanzada', compact('trabajos'));
     }
 }
-    

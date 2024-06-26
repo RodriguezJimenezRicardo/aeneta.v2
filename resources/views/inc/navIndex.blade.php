@@ -22,16 +22,6 @@
             @if (isset($navbar) && $navbar)
                 <ul class="navbar-nav px-5">
                     <li class="nav-item px-4">
-                        <a class="nav-link active" href="#">Index</a>
-                    </li>
-
-                    <li class="nav-item px-4">
-                        <a class="nav-link active" href="#">Index</a>
-                    </li>
-                    <li class="nav-item px-4">
-                        <a class="nav-link active" href="#">Index</a>
-                    </li>
-                    <li class="nav-item px-4">
                         <a class="nav-link active" href="{{ route('Busqueda') }}">Búsqueda</a>
                     </li>
                 </ul>
@@ -41,12 +31,13 @@
                 <div class="collapse navbar-collapse navbarIntranet d-flex justify-content-end" id="navbarIntranet2">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-bs-toggle="dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown"
+                                data-bs-toggle="dropdown">
                                 {{ Session::get('user')->email }}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                data-bs-target="#exampleModal">Cerrar sesión</a>
+                                    data-bs-target="#exampleModal">Cerrar sesión</a>
 
                             </div>
                         </li>

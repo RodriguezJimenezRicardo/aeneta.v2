@@ -30,7 +30,7 @@ Route::get('/busqueda', function () {
 })->name('Busqueda');
 
 
-Route::get('/buscar',[BusquedaController::class, 'buscar'])->name('buscar.trabajos');
+Route::get('/buscar', [BusquedaController::class, 'buscar'])->name('buscar.trabajos');
 
 // Ruta para mostrar la vista de búsqueda avanzada
 Route::get('/busqueda-avanzada', [BusquedaController::class, 'busquedaAvanzada'])->name('busqueda.avanzada');
@@ -97,11 +97,15 @@ Route::middleware(['auth', 'user.session'])->controller(EstudianteController::cl
     Route::prefix('/{id_estudiante}')->group(function () {
         Route::get('/', 'index')->name('estudiante.index');
 
-        Route::get('/consultarTrabajos','consultarTrabajos')->name('estudiante.consultarTrabajos');
-        Route::get('/RegistrarTrabajo',  'registrarTrabajoForm')->name('estudiante.registrarTrabajoForm');
-        Route::post('/RegistrarTrabajo',  'registrarTrabajo')->name('estudiante.RegistrarTrabajo');
-        Route::get('/ttDetails/{id}', 'ttDetails')->name('estudiante.ttDetails');       
-        Route::post('/Aprobar/{id}/{aprobado}','AprobarRegistro')->name('estudiante.ConfirmarSinodales'); 
+        Route::get('/consultarTrabajos', 'consultarTrabajos')->name('estudiante.consultarTrabajos');
+
+        Route::get('/RegistrarTrabajo', 'registrarTrabajoForm')->name('estudiante.registrarTrabajoForm');
+
+        Route::post('/RegistrarTrabajo', 'registrarTrabajo')->name('estudiante.RegistrarTrabajo');
+
+        Route::get('/ttDetails/{id}', 'ttDetails')->name('estudiante.ttDetails');
+
+        Route::post('/Aprobar/{id}/{aprobado}', 'AprobarRegistro')->name('estudiante.ConfirmarSinodales');
     });
 });
 
