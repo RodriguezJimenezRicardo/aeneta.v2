@@ -36,26 +36,50 @@ class BusquedaController extends Controller
     // Método para manejar la búsqueda avanzada
     public function buscarAvanzada(Request $request)
     {
-        $trabajos = DB::table('trabajoacademico')
-            ->when($request->input('tipoTrabajo'), function($query, $tipoTrabajo) {
-                return $query->where('id_tipoTrabajo', 'like', '%' . $tipoTrabajo . '%');
-            })
-            ->when($request->input('titulo'), function($query, $titulo) {
-                return $query->where('titulo', 'like', '%' . $titulo . '%');
-            })
-            ->when($request->input('descripcion'), function($query, $descripcion) {
-                return $query->where('descripcion', 'like', '%' . $descripcion . '%');
-            })
-            ->when($request->input('fechaInicio'), function($query, $fechaInicio) {
-                return $query->where('fecha_inicio', '>=', $fechaInicio);
-            })
-            ->when($request->input('fechaFin'), function($query, $fechaFin) {
-                return $query->where('fecha_final', '<=', $fechaFin);
-            })
-            ->when($request->input('area'), function($query, $area) {
-                return $query->where('id_area', 'like', '%' . $area . '%');
-            })
-            ->get();
+        $query = DB::table('trabajoacademico');
+
+        if ($request->filled('tipoTrabajo')) {
+            $query->where('id_tipoTrabajo', 'like', '%' . $request->tipoTrabajo . '%');
+        }
+
+        if ($request->filled('titulo')) {
+            $query->where('titulo', 'like', '%' . $request->titulo . '%');
+        }
+
+        if ($request->filled('descripcion')) {
+            $query->where('descripcion', 'like', '%' . $request->descripcion . '%');
+        }
+
+        if ($request->filled('fechaInicio')) {
+            $query->where('fecha_inicio', '>=', $request->fechaInicio);
+        }
+
+        if ($request->filled('fechaFin')) {
+            $query->where('fecha_final', '<=', $request->fechaFin);
+        }
+
+        if ($request->filled('area')) {
+            $query->where('id_area', 'like', '%' . $request->area . '%');
+        }
+
+        if ($request->filled('nombreAlumno')) {
+            $alumnoIds = DB::table('estudiante')
+                ->where(function ($query) use ($request) {
+                    $query->where('nombre', 'like', '%' . $request->nombreAlumno . '%')
+                          ->orWhere('apellido', 'like', '%' . $request->nombreAlumno . '%');
+                })
+                ->pluck('id_trabajoAcademico');
+            $query->whereIn('id_trabajoAcademico', $alumnoIds);
+        }
+
+        if ($request->filled('nombreProfesor')) {
+            $profesorIds = DB::table('profesor')
+                ->where('nombre', 'like', '%' . $request->nombreProfesor . '%')
+                ->pluck('id_trabajoAcademico');
+            $query->whereIn('id_trabajoAcademico', $profesorIds);
+        }
+
+        $trabajos = $query->get();
 
         return view('Busqueda.busquedaavanzada', compact('trabajos'));
     }

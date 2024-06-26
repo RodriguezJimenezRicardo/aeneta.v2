@@ -1,4 +1,19 @@
-@extends('layouts.index', ['navbar' => true])
+@php
+    $layout = 'layouts.index';
+    $navbar = ['navbar' => true];
+
+    if (Session::get('user')) {
+        if (Session::get('user')->rol === 'Estudiante') {
+            $layout = 'layouts.baseUser';
+            $navbar = ['navbar' => true, 'id_estudiante' => Session::get('user')->id_estudiante];
+        } elseif (Session::get('user')->rol === 'Docente') {
+            $layout = 'layouts.baseUser';
+            $navbar = ['navbar' => true, 'id_docente' => Session::get('user')->id_docente];
+        }
+    }
+@endphp
+
+@extends($layout, $navbar)
 
 @section('title', 'Búsqueda Avanzada')
 
@@ -31,6 +46,14 @@
                 <div class="form-group">
                     <label for="area">Área:</label>
                     <input type="text" class="form-control" id="area" name="area" value="{{ request('area') }}">
+                </div>
+                <div class="form-group">
+                    <label for="nombreAlumno">Nombre del Alumno:</label>
+                    <input type="text" class="form-control" id="nombreAlumno" name="nombreAlumno" value="{{ request('nombreAlumno') }}">
+                </div>
+                <div class="form-group">
+                    <label for="nombreProfesor">Nombre del Profesor:</label>
+                    <input type="text" class="form-control" id="nombreProfesor" name="nombreProfesor" value="{{ request('nombreProfesor') }}">
                 </div>
                 <button type="submit" class="btn btn-primary float-left">Realizar Búsqueda</button>
             </form>
