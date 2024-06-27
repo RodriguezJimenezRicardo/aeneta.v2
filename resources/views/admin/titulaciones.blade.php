@@ -1,7 +1,7 @@
 @extends('layouts.base', ['navbar' => true])
 
 @section('content')
-    <div class="row justify-content-center" style="padding: 25px">
+    <div class="row justify-content-center" style="padding: 25px;background-color: #bdd1de;">
         <div class="col-md-7">
             <div class="row">
                 <div class="col-3">
@@ -105,4 +105,7 @@
         </div>
     </div>
     </div>
+    <footer class="faq-footer" style="margin-top: 100px;">
+       <p>&copy; 2024 Challenge team</p>
+    </footer>
 @endsection

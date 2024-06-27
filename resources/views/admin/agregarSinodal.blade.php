@@ -44,11 +44,11 @@
     });
 </script>
 @section('content')
-<div class="container mt-5">
+<div class="container mt-5" style="background-color: #bdd1de;">
     <h1>Agregar Sinodal</h1>
     <form action="{{ route('admin.addSinodales') }}" method="POST">
         @csrf
-        <div class="form-group">
+        <div class="form-group" style="background-color: #e4ebf0;">
             <label for="tt">Selecciona un Trabajo Terminal:</label>
             <select name="tt_id" id="tt" class="form-control">
                 @foreach ($trabajos as $trabajo)
@@ -57,7 +57,7 @@
             </select>
         </div>
         <br>
-        <div id="sinodalesContainer" class="mb-3">
+        <div id="sinodalesContainer" class="mb-3" style="background-color: #e4ebf0;" >
             <label for="sinodales" class="form-label">Sinodales</label>
             <div class="input-group mb-3">
                 <select name="sinodales[]" class="form-control sinodal-select" required onchange="updateOptions()">
@@ -73,4 +73,7 @@
         <button type="submit" class="btn btn-primary">Guardar Sinodales</button>
     </form>
 </div>
+<footer class="faq-footer" style="margin-top: 100px;">
+    <p>&copy; 2024 Challenge team</p>
+</footer>
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.baseUser', ['navbar' => true,'id_estudiante' => $estudiante->id_estudiante])
 @section('content')
-<div class="container mt-5">
+<div class="container mt-5" style="background-color: #bdd1de;">
     <h1>Lista de Trabajos Terminales</h1>
     <table class="table table-bordered">
         <thead>
@@ -13,6 +13,7 @@
                 <th>Área</th>
                 <th>Estatus</th>
                 <th>Acciones</th>
+                <th>Detalles</th>
             </tr>
         </thead>
         <tbody>

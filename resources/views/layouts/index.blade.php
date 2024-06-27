@@ -7,14 +7,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Aeneta</title>
-    @vite(['resources/css/app.scss', 'resources/js/app.js'])
+    @vite(['resources/css/app.scss','resources/css/FAQ.css', 'resources/js/app.js', 'resources/css/custom.css',
+                    'resources/css/fontawesome.css',
+                    'resources/css/fontawesome.min.css',
+                    'resources/css/slick-theme.css',
+                    'resources/css/slick-theme.min.css',
+                    'resources/css/slick.min.css',
+                    'resources/css/templatemo.css',
+                    'resources/css/templatemo.min.css'])
 </head>
 
-<body>
+<body style="background-color: #8ab3cf;">
     @include('inc.navIndex')
     <div class="container">
        @include('inc.messages')
-        <!---@yield('content')-->
+      -@yield('content')
     </div>
 </body>
 

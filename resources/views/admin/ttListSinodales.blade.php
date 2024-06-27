@@ -14,6 +14,7 @@
                 <th>Área</th>
                 <th>Estatus</th>
                 <th>Acciones</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -41,4 +42,7 @@
     </table>
     <a href="{{ route('admin.index') }}" class="btn btn-primary">Volver a Panel de Admin</a>
 </div>
+<footer class="faq-footer" style="margin-top: 100px;">
+   <p>&copy; 2024 Challenge team</p>
+</footer>
 @endsection

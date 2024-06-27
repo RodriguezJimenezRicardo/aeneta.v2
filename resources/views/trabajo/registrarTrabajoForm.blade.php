@@ -21,38 +21,38 @@
 @extends('layouts.baseUser', ['navbar' => true,'id_estudiante' => $estudiante->id_estudiante])
 
 @section('content')
-<div class="container mt-5">
+<div class="container mt-5" style="background-color: #bdd1de;">
     <h1 class="mb-4">Registrar Trabajo Academico Nuevo</h1>
     <form action="{{ route('estudiante.RegistrarTrabajo',['id_estudiante' => $estudiante->id_estudiante] ) }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <div class="mb-3">
+        <div class="mb-3" style="background-color: #e4ebf0">
             <label for="tipoTrabajoAcademico" class="form-label">Tipo de Trabajo Academico</label>
             <input type="text" class="form-control" id="tipoTrabajoAcademico" name="tipoTrabajoAcademico" placeholder="Tipo de Trabajo Academico" required>
         </div>
-        <div class="mb-3">
+        <div class="mb-3" style="background-color: #e4ebf0">
             <label for="titulo" class="form-label">Título del Trabajo Academico</label>
             <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título del Trabajo Academico" required>
         </div>
-        <div class="mb-3">
+        <div class="mb-3" style="background-color: #e4ebf0">
             <label for="descripcion" class="form-label">Breve Descripción del Trabajo Academico</label>
             <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="Breve descripcion del trabajo academico" required>
         </div>
-        <div class="mb-3">
+        <div class="mb-3" style="background-color: #e4ebf0">
             <label for="fechaInicio" class="form-label">Fecha de Inicio</label>
             <input type="date" class="form-control" id="fechaInicio" name="fechaInicio" required>
         </div>
-        <div class="mb-3">
+        <div class="mb-3" style="background-color: #e4ebf0">
             <label for="area" class="form-label">Área</label>
             <input type="text" class="form-control" id="area" name="area" placeholder="Área" required>
         </div>
-        <div id="integrantesContainer" class="mb-3">
+        <div id="integrantesContainer" class="mb-3" style="background-color: #e4ebf0">
             <label class="form-label">Integrantes</label>
             <div class="input-group mb-3">
                 <input type="text" class="form-control" name="integrantes[]" value="{{ $estudiante->id_estudiante }}" readonly required>
             </div>
         </div>
         <button type="button" class="btn btn-success mb-3" onclick="addIntegrante()">Agregar Integrante</button>
-        <div class="mb-3">
+        <div class="mb-3" style="background-color: #e4ebf0">
             <label for="pdf_file" class="form-label">PDF de la Solicitud</label>
             <input type="file" class="form-control" id="pdf_file" name="pdf_file" required>
         </div>

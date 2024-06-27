@@ -29,6 +29,10 @@ Route::get('/busqueda', function () {
     return view('Busqueda.busquedasimple');
 })->name('Busqueda');
 
+Route::get('/faq', function () {
+    return view('faq');
+})->name('faq');
+
 
 Route::get('/buscar', [BusquedaController::class, 'buscar'])->name('buscar.trabajos');
 

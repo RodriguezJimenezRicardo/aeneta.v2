@@ -1,8 +1,8 @@
 @extends('layouts.base', ['navbar' => true])
 @section('content')
 
-<div class="container mt-5">
-    <h1>Lista de Trabajos Terminales</h1>
+<div class="container mt-5" style="background-color: #bdd1de;">
+    <h1>Lista de Trabajos Academicos</h1>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -14,6 +14,9 @@
                 <th>Área</th>
                 <th>Estatus</th>
                 <th>Acciones</th>
+                <th>Detalles</th>
+                <th>  </th>
+                <th> </th>
             </tr>
         </thead>
         <tbody>
@@ -52,4 +55,7 @@
     </table>
     <a href="{{ route('admin.index') }}" class="btn btn-primary">Volver a Panel de Admin</a>
 </div>
+<footer class="faq-footer" style="margin-top: 100px;">
+   <p>&copy; 2024 Challenge team</p>
+</footer>
 @endsection

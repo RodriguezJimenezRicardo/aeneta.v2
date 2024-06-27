@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Aeneta</title>
-    @vite(['resources/css/app.scss', 'resources/js/app.js'])
+    @vite(['resources/css/app.scss', 'resources/js/app.js','resources/css/FAQ.css'])
 </head>
 
-<body>
+<body style="background-color: #8ab3cf;">
     @include('inc.navbar')
     <div class="container">
         @include('inc.messages')

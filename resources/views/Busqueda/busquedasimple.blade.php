@@ -18,7 +18,7 @@
 @section('title', 'Búsqueda Académica')
 
 @section('content')
-<div class="container mt-5">
+<div class="container mt-5" style="background-color: #bdd1de;">
     <div class="card shadow search-container">
         <div class="card-body">
             <form action="{{ route('buscar.trabajos') }}" method="GET">
@@ -34,7 +34,7 @@
     </div>
 
     @if (isset($query))
-        <div class="card shadow mt-4 results-container">
+        <div class="card shadow mt-4 results-container" style="background-color: #bdd1de;">
             <div class="card-body">
                 <h4>Resultados de la Búsqueda</h4>
                 @if ($trabajos->isEmpty())
@@ -47,6 +47,7 @@
                                 <th>Descripción</th>
                                 <th>Área</th>
                                 <th>Acciones</th>
+                                <th>Detalles</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -70,6 +71,9 @@
         </div>
     @endif
 </div>
+<footer class="faq-footer" style="margin-top: 300px;">
+   <p>&copy; 2024 Challenge team</p>
+</footer>
 @endsection
 
 @section('scripts')
