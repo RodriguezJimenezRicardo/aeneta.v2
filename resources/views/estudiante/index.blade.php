@@ -6,7 +6,7 @@
             <img src="/img/trabajos.jpeg" alt="Fondo de la carta" class="fondoCarta">
             <img src="/img/perfil.png" alt="Foto de perfil" class="fotoPerfil">
             <div class="detalles">
-            <p>Bienvenid@ {{ $estudiante->nombre }} </p>
+            <p>Bienvenid@:   {{ $estudiante->nombre }} </p>
                 <p>Estudiante</p>
                 <section class="info">
                     <div>Estado</div>
