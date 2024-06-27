@@ -64,12 +64,17 @@
                             <li class="nav-item px-4">
                                 <a class="nav-link active"
                                     href="{{ route('estudiante.consultarTrabajos', ['id_estudiante' => $id_estudiante]) }}">Historial
-                                    de trabajo Academico</a>
+                                </a>
                             </li>
                             <li class="nav-item px-4">
                                 <a class="nav-link active"
-                                    href="{{ route('estudiante.registrarTrabajoForm', ['id_estudiante' => $id_estudiante]) }}">Registrar
-                                    Trabajo Nuevo</a>
+                                    href="{{ route('estudiante.procesost', ['id_estudiante' => $id_estudiante]) }}">
+                                    Formas Titulación </a>
+                            </li>
+                            <li class="nav-item px-4">
+                                <a class="nav-link active"
+                                    href="{{ route('estudiante.registrarTrabajoForm', ['id_estudiante' => $id_estudiante]) }}">
+                                    Nuevo Trabajo</a>
                             </li>
                             <li class="nav-item px-4">
                                 <a class="nav-link active" href="{{ route('faq') }}">Preguntas Frecuentes</a>

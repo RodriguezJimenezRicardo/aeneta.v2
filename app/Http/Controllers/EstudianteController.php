@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Docente;
 use App\Models\Estudiante;
+use App\Models\Titulacion;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -153,6 +154,23 @@ class EstudianteController extends Controller
             ]
         );
     }
+
+    public function procesost(string $id_estudiante)
+    {
+        if (session('user')->rol != 'Estudiante') {
+            return badRequest('No tienes permisos suficientes');
+        }
+        try {
+            $estudiante = Estudiante::findOrFail($id_estudiante);
+        } catch (Exception $e) {
+            return badRequest('Estudiante no encontrado');
+        }
+
+        $titulaciones = Titulacion::all();
+
+        return view('estudiante.titulaciones')->with(['titulaciones' => $titulaciones, 'estudiante' => $estudiante]);
+    }
+
     public function AprobarRegistro($id_estudiante, $id, $aprobado)
     {
         try {

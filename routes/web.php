@@ -71,8 +71,6 @@ Route::middleware(['auth', 'user.session'])->controller(AdminController::class)-
 
     Route::get('/procesost', 'procesost')->name('admin.procesost');
 
-    Route::get('/procesost', 'procesost')->name('admin.procesost');
-
     Route::get('/agregarSinodal/{id}', 'agregarSinodal')->name('admin.agregarSinodal');
 
     Route::post('/addSinodales', 'addSinodales')->name('admin.addSinodales');
@@ -110,6 +108,8 @@ Route::middleware(['auth', 'user.session'])->controller(EstudianteController::cl
         Route::get('/ttDetails/{id}', 'ttDetails')->name('estudiante.ttDetails');
 
         Route::post('/Aprobar/{id}/{aprobado}', 'AprobarRegistro')->name('estudiante.ConfirmarSinodales');
+
+        Route::get('/procesost', 'procesost')->name('estudiante.procesost');
     });
 });
 
