@@ -10,7 +10,6 @@ export default defineConfig({
                     'resources/css/fontawesome.min.css',
                     'resources/css/slick-theme.css',
                     'resources/css/slick-theme.min.css',
-                    'resources/css/slick.min.css',
                     'resources/css/templatemo.css',
                     'resources/css/templatemo.min.css',
                     'resources/css/perfil.css',

@@ -1,4 +1,19 @@
-@extends('layouts.base', ['navbar' => true])
+@php
+    $layout = 'layouts.index';
+    $navbar = ['navbar' => true];
+
+    if (Session::get('user')) {
+        if (Session::get('user')->rol === 'Estudiante') {
+            $layout = 'layouts.baseUser';
+            $navbar = ['navbar' => true, 'id_estudiante' => Session::get('user')->id_estudiante];
+        } elseif (Session::get('user')->rol === 'Docente') {
+            $layout = 'layouts.baseUser';
+            $navbar = ['navbar' => true, 'id_docente' => Session::get('user')->id_docente];
+        }
+    }
+@endphp
+
+@extends($layout, $navbar)])
 
 @section('content')
 <div class="container mt-5" style="background-color: #bdd1de;">

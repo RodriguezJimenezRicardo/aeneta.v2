@@ -75,7 +75,7 @@ class EstudianteController extends Controller
 
         // Guardar en la base de datos
         try {
-            DB::table('TrabajoAcademico')->insert([
+            DB::table('trabajoacademico')->insert([
                 'id_tipoTrabajo' => $request->input('tipoTrabajoAcademico'),
                 'titulo' => $request->input('titulo'),
                 'descripcion' => $request->input('descripcion'),
