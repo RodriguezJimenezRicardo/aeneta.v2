@@ -34,8 +34,8 @@
             <div class="modal-footer">
                 <input type="hidden" name="id_titulacionE" id="id_titulacionE"
                     value="{{ $titulacion->id_titulacion }}">
-                <button type="button" class="btn btn-secundario" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-principal">Enviar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Enviar</button>
             </div>
             </form>
         </div>

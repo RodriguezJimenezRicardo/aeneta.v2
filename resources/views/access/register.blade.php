@@ -39,7 +39,7 @@
                             <div class="mb-3 row">
                                 <div class="col-md-12 d-flex justify-content-center">
                                     <button type="submit"
-                                        class="btn btn-principal btn-lg rounded-pill col-md-12">Enviar</button>
+                                        class="btn btn-primary btn-lg rounded-pill col-md-12">Enviar</button>
                                 </div>
                             </div>
                         </form>

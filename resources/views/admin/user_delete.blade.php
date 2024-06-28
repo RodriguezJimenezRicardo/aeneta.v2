@@ -22,7 +22,7 @@
                     @method('delete')
                     <input type="hidden" name="id_user" id="id_user" value="{{ $user->id_user }}">
                     <input type="hidden" name="rol" id="rol" value="{{ $user->rol }}">
-                    <button type="button" class="btn btn-principal" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-danger">Eliminar</button>
 
                 </form>

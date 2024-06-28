@@ -16,7 +16,7 @@
                     @method('delete')
                     <input type="hidden" name="id_titulacion" id="id_titulacion"
                         value="{{ $titulacion->id_titulacion }}">
-                    <button type="button" class="btn btn-principal" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-danger">Eliminar</button>
 
                 </form>

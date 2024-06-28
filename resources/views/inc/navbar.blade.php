@@ -6,19 +6,23 @@
             align-items: center;
             padding: 20px;
             border: 1px solid #000;
-            background-color:#bdd1de;
+            background-color: #bdd1de;
         }
+
         .content {
             text-align: center;
         }
+
         .content h1 {
             font-size: 24px;
             margin: 0;
         }
+
         .content h2 {
             font-size: 18px;
             margin: 5px 0;
         }
+
         .content h3 {
             font-size: 14px;
             margin: 5px 0;
@@ -101,9 +105,9 @@
                 ¿Estás seguro de cerrar sesión?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secundario" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <a href="{{ route('logout') }}">
-                    <button type="submit" class="btn btn-principal">
+                    <button type="submit" class="btn btn-danger">
                         Cerrar sesíon
                     </button>
                 </a>

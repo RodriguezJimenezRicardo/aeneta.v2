@@ -1,7 +1,7 @@
 @extends('layouts.base', ['navbar' => true])
 
 @section('content')
-    <div class="row justify-content-center" style="padding: 25px; background-color: #bdd1de;"> 
+    <div class="row justify-content-center" style="padding: 25px; background-color: #bdd1de;">
         <div class="col-md-9">
             <div class="row">
                 <div class="col-4">
@@ -14,7 +14,7 @@
                 </div>
                 <div class="col text-end">
                     {{-- BUTTON ADD CONTACT --}}
-                    <button type="button" title="Agregar usuario" class="btn btn-principal" data-bs-toggle="modal"
+                    <button type="button" title="Agregar usuario" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#adduserModal">
                         <i class="bi bi-person-fill-add"></i>
                     </button>
@@ -175,8 +175,8 @@
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secundario" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-principal">Enviar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
                     </div>
                     </form>
                 </div>
@@ -203,7 +203,7 @@
 
         });
     </script>
-<footer class="faq-footer" style="margin-top: 100px;">
-   <p>&copy; 2024 Challenge team</p>
-</footer>
+    <footer class="faq-footer" style="margin-top: 100px;">
+        <p>&copy; 2024 Challenge team</p>
+    </footer>
 @endsection

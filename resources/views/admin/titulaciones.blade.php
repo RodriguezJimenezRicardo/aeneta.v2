@@ -96,8 +96,8 @@
                             </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secundario" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-principal">Enviar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
                     </div>
                     </form>
                 </div>
@@ -106,6 +106,6 @@
     </div>
     </div>
     <footer class="faq-footer" style="margin-top: 100px;">
-       <p>&copy; 2024 Challenge team</p>
+        <p>&copy; 2024 Challenge team</p>
     </footer>
 @endsection

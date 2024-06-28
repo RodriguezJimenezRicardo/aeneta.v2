@@ -18,7 +18,7 @@
                     </div>
                     <div class="mb-3 row">
                         <div class="col-md-12 d-flex justify-content-center">
-                            {{ Form::submit('Entrar', ['class' => 'btn btn-principal rounded-pill col-md-12']) }}
+                            {{ Form::submit('Entrar', ['class' => 'btn btn-primary rounded-pill col-md-12']) }}
                         </div>
                     </div>
                     <div>
